@@ -10,8 +10,13 @@ export class TasksService {
     @InjectRepository(TasksRepository)
     private tasksRepository: TasksRepository,
   ) {}
-  async getAllTasks(): Promise<Task[]> {
-    const tasks = await this.tasksRepository.find();
+  async getActiveTasks(): Promise<Task[]> {
+    const tasks = await this.tasksRepository.find({ where: { status: false } });
+    return tasks;
+  }
+
+  async getCompletedTasks(): Promise<Task[]> {
+    const tasks = await this.tasksRepository.find({ where: { status: true } });
     return tasks;
   }
 

@@ -16,8 +16,13 @@ import { TasksService } from './tasks.service';
 export class TasksController {
   constructor(private tasksService: TasksService) {}
   @Get()
-  getAllTasks(): Promise<Task[]> {
-    return this.tasksService.getAllTasks();
+  getActiveTasks(): Promise<Task[]> {
+    return this.tasksService.getActiveTasks();
+  }
+
+  @Get('/completed')
+  getCompletedTasks(): Promise<Task[]> {
+    return this.tasksService.getCompletedTasks();
   }
 
   @Post()
