@@ -20,8 +20,11 @@ export class Task {
   @Column()
   status: boolean;
 
-  @Column({ type: 'time' })
-  time: string;
+  @Column()
+  minutes: number;
+
+  @Column()
+  seconds: number;
 
   @CreateDateColumn()
   created_at: Date;

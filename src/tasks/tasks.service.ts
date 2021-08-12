@@ -37,12 +37,14 @@ export class TasksService {
 
   async updateTask(
     id: number,
-    time: string,
+    minutes: number,
+    seconds: number,
     description: string,
   ): Promise<Task> {
     const foundTask = await this.getTaskById(id);
     foundTask.description = description;
-    foundTask.time = time;
+    foundTask.seconds = seconds;
+    foundTask.minutes = minutes;
     await this.tasksRepository.save(foundTask);
     return foundTask;
   }

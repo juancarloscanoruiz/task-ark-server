@@ -5,11 +5,12 @@ import { Task } from './tasks.entity';
 @EntityRepository(Task)
 export class TasksRepository extends Repository<Task> {
   async createTask(createTaskDto: CreateTaskDto) {
-    const { title, description, time, status } = createTaskDto;
+    const { title, description, minutes, seconds, status } = createTaskDto;
     const task = this.create({
       title,
       description,
-      time,
+      minutes,
+      seconds,
       status,
     });
 

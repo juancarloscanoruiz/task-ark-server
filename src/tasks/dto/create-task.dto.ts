@@ -8,7 +8,10 @@ export class CreateTaskDto {
   description: string;
 
   @IsNotEmpty()
-  time: string;
+  minutes: number;
+
+  @IsNotEmpty()
+  seconds: number;
 
   @IsNotEmpty()
   status: boolean;

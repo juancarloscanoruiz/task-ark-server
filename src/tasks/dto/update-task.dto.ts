@@ -5,5 +5,8 @@ export class UpdateTaskDto {
   description: string;
 
   @IsNotEmpty()
-  time: string;
+  seconds: number;
+
+  @IsNotEmpty()
+  minutes: number;
 }
