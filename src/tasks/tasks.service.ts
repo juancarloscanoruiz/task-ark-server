@@ -42,11 +42,13 @@ export class TasksService {
 
   async updateTask(
     id: number,
+    title: string,
     minutes: number,
     seconds: number,
     description: string,
   ): Promise<Task> {
     const foundTask = await this.getTaskById(id);
+    foundTask.title = title;
     foundTask.description = description;
     foundTask.seconds = seconds;
     foundTask.minutes = minutes;
