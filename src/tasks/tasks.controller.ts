@@ -26,6 +26,11 @@ export class TasksController {
     return this.tasksService.getCompletedTasks();
   }
 
+  @Get('/last-week')
+  getTasksLastWeek(): Promise<Task[]> {
+    return this.tasksService.getTasksLastWeek();
+  }
+
   @Get('/:id')
   getTaskById(@Param('id') id: number): Promise<Task> {
     return this.tasksService.getTaskById(id);

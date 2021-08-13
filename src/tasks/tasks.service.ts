@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { Task } from './tasks.entity';
 import { TasksRepository } from './tasks.repository';
+import * as moment from 'moment';
+import { Between, MoreThan } from 'typeorm';
 
 @Injectable()
 export class TasksService {
@@ -63,5 +65,32 @@ export class TasksService {
     foundTask.status = status;
     await this.tasksRepository.save(foundTask);
     return foundTask;
+  }
+
+  async getTasksLastWeek(): Promise<Task[]> {
+    const currentDate = moment().utc().format('YYYY-MM-DD');
+    const olderDate = moment().utc().subtract(7, 'days').format('YYYY-MM-DD');
+    const olderDateCopy = moment().subtract(7, 'days');
+    const tasksLastWeek: any[] = [];
+    const tasks = await this.tasksRepository.find({
+      updated_at: MoreThan(olderDate),
+      status: true,
+    });
+    while (true) {
+      olderDateCopy.add(1, 'days');
+      if (olderDateCopy.isAfter(currentDate, 'day')) {
+        break;
+      }
+      let counter = 0;
+      for (const task of tasks) {
+        const taskUpdateDate = moment(task.updated_at).subtract(5, 'hours');
+        if (taskUpdateDate.isSame(olderDateCopy, 'day')) {
+          counter += 1;
+        }
+      }
+      tasksLastWeek.push({ value: counter, day: olderDateCopy.date() });
+      counter = 0;
+    }
+    return tasksLastWeek;
   }
 }
