@@ -1,12 +1,8 @@
 import { IsNotEmpty } from 'class-validator';
 
 export class UpdateTaskDto {
-  @IsNotEmpty()
+  title: string;
   description: string;
-
-  @IsNotEmpty()
   seconds: number;
-
-  @IsNotEmpty()
   minutes: number;
 }
