@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { UpdateTaskStatusDto } from './dto/update-task.status.dto';
 import { Task } from './tasks.entity';
 import { TasksService } from './tasks.service';
 
@@ -45,13 +46,23 @@ export class TasksController {
     @Param('id') id: number,
     @Body() updateTaskDto: UpdateTaskDto,
   ): Promise<Task> {
-    const { title, minutes, seconds, description } = updateTaskDto;
+    const { title, minutes, seconds, description, status } = updateTaskDto;
     return this.tasksService.updateTask(
       id,
       title,
       minutes,
       seconds,
       description,
+      status,
     );
+  }
+
+  @Patch('/:id')
+  updateTaskStatus(
+    @Param('id') id: number,
+    @Body() updateTaskStatusDto: UpdateTaskStatusDto,
+  ): Promise<Task> {
+    const { status } = updateTaskStatusDto;
+    return this.tasksService.updateTaskStatus(id, status);
   }
 }
