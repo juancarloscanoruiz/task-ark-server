@@ -57,7 +57,7 @@ export class TasksController {
     );
   }
 
-  @Patch('/:id')
+  @Patch('/status/:id')
   updateTaskStatus(
     @Param('id') id: number,
     @Body() updateTaskStatusDto: UpdateTaskStatusDto,
