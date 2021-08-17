@@ -67,6 +67,36 @@ export class TasksService {
     return foundTask;
   }
 
+  getDay(day): string {
+    let nameDay = '';
+    switch (day) {
+      case 0:
+        nameDay = 'Domingo';
+        break;
+      case 1:
+        nameDay = 'Lunes';
+        break;
+      case 2:
+        nameDay = 'Martes';
+        break;
+      case 3:
+        nameDay = 'Miércoles';
+        break;
+      case 4:
+        nameDay = 'Jueves';
+        break;
+      case 5:
+        nameDay = 'Viernes';
+        break;
+      case 6:
+        nameDay = 'Sábado';
+        break;
+      default:
+        break;
+    }
+    return nameDay;
+  }
+
   async getTasksLastWeek(): Promise<Task[]> {
     const currentDate = moment().utc().format('YYYY-MM-DD');
     const olderDate = moment().utc().subtract(7, 'days').format('YYYY-MM-DD');
@@ -88,7 +118,10 @@ export class TasksService {
           counter += 1;
         }
       }
-      tasksLastWeek.push({ value: counter, day: olderDateCopy.date() });
+      tasksLastWeek.push({
+        value: counter,
+        day: `${this.getDay(olderDateCopy.day())} - ${olderDateCopy.date()}`,
+      });
       counter = 0;
     }
     return tasksLastWeek;
